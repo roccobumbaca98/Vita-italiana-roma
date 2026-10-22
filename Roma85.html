@@ -1,0 +1,258 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>VITA ITALIANA: ROMA 8.5 · LOCALI INTERATTIVI</title><style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#a6d2ef;color:#fff;font-family:system-ui,-apple-system,sans-serif;touch-action:none}canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}#hud{position:fixed;top:max(8px,env(safe-area-inset-top));left:10px;right:10px;display:flex;justify-content:space-between;pointer-events:none;font-size:12px;font-weight:750;text-shadow:0 2px 5px #000b}#status,#message{background:#193348c9;border-radius:11px;padding:9px 12px}#message{position:fixed;top:65px;left:50%;transform:translateX(-50%);font-size:12px;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis;pointer-events:none}#controls{position:fixed;bottom:calc(15px + env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:space-between;padding:0 14px;pointer-events:none}.group{display:flex;align-items:center;flex-direction:column;gap:5px;font-size:11px;font-weight:750;text-shadow:0 2px 5px #000;pointer-events:none}.stick{width:min(31vw,134px);height:min(31vw,134px);border:3px solid #fff9;border-radius:50%;background:#173e6099;position:relative;pointer-events:auto;touch-action:none}.knob{position:absolute;width:44%;height:44%;left:28%;top:28%;border-radius:50%;background:#e6f3f3e0;border:2px solid #fff;pointer-events:none}#actions{position:fixed;top:100px;right:10px;display:flex;flex-direction:column;gap:8px}button{border:1px solid #d3e9ff9a;background:#164363df;color:#fff;border-radius:10px;padding:10px 12px;font-size:12px;font-weight:800;touch-action:manipulation}#enter{background:#25765ce8;display:none}#error{position:fixed;inset:15%;z-index:5;display:none;background:#233747;padding:20px;border-radius:12px}#tip{position:fixed;bottom:calc(165px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);font-size:11px;background:#1b394ab8;padding:7px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}@media(max-height:570px){#actions{top:50px}.stick{width:min(28vh,108px);height:min(28vh,108px)}#tip{display:none}}
+#driveControls{display:none;position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:0;right:0;align-items:flex-end;justify-content:space-between;padding:0 13px;pointer-events:none;gap:10px}#steerPad{width:min(38vw,170px);height:min(38vw,170px);border-radius:50%;border:5px solid #e8f4ffcc;background:#193b57bb;position:relative;pointer-events:auto;touch-action:none;display:flex;align-items:center;justify-content:center;font-size:56px;user-select:none}#steerPad:after{content:'STERZA';position:absolute;bottom:6px;font-size:10px;font-weight:900;letter-spacing:1px}#pedals{display:flex;gap:9px;align-items:flex-end;pointer-events:auto}#pedals button{width:min(22vw,105px);height:min(29vw,132px);border-radius:18px;font-size:15px;font-weight:900;line-height:1.5;user-select:none;-webkit-user-select:none;touch-action:none}#gas{background:#187d4de8}#brake{background:#a94538e8}#pedals button.pressed{filter:brightness(1.4);transform:scale(.96)}body.in-car #controls{display:none}body.in-car #driveControls{display:flex}body.in-car #run{display:none}body.in-car #tip{bottom:calc(175px + env(safe-area-inset-bottom))}@media(max-height:570px){#steerPad{width:105px;height:105px;font-size:40px}#pedals button{height:96px;width:80px}body.in-car #tip{display:none}}
+#lifeHud{position:fixed;top:calc(49px + env(safe-area-inset-top));left:10px;background:#183348d9;border-radius:10px;padding:6px 9px;font-size:12px;font-weight:800;pointer-events:none}#lifeAction{display:none;background:#c68c2f}#lifePanel{display:none;position:fixed;inset:0;background:#081923b8;z-index:10;align-items:center;justify-content:center;padding:18px}#lifeCard{width:min(92vw,390px);background:#183348;border:1px solid #9ec4c9;border-radius:20px;padding:20px;box-shadow:0 16px 50px #0008;max-height:82vh;overflow:auto}#lifeCard h2{margin:0 0 8px;font-size:21px}#lifeCard p{line-height:1.45;font-size:14px}#lifeChoices{display:flex;flex-direction:column;gap:9px}#lifeChoices button{font-size:15px;padding:14px;background:#27765e}#closeLife{float:right;background:#8c4141}#lifeNote{font-size:12px;opacity:.9}body.life-open #controls,body.life-open #driveControls{visibility:hidden}@media(max-width:420px){#lifeHud{font-size:11px;max-width:72vw}#actions{top:125px}#actions button{padding:8px 9px;font-size:11px}}
+#exitInterior{display:none;position:fixed;top:100px;right:10px;z-index:4;background:#237d63}body.inside #exitInterior{display:block;top:125px;right:12px}body.inside #enter,body.inside #lifeAction,body.inside #run{display:none!important}#lookZone{position:fixed;right:0;top:0;width:54vw;height:100vh;touch-action:none;pointer-events:auto;z-index:1}#controls,#driveControls,#actions,#lifeHud,#hud,#message,#tip{z-index:2}#lifePanel{z-index:10}body.in-car #lookZone{display:none}#controls{justify-content:flex-start}#tip{font-size:10px;max-width:95vw;text-align:center;white-space:normal} #homeInteract{display:none;position:fixed;bottom:calc(165px + env(safe-area-inset-bottom));right:12px;top:auto;z-index:6;background:#ad7630;padding:13px 15px;box-shadow:0 4px 12px #0005}body.inside #homeInteract{display:block}#homeInteract:disabled{opacity:.5}@media(max-height:570px){#homeInteract{top:120px}}
+
+/* ROMA 8.5: controls never overlap in portrait or landscape */
+body.inside #actions{display:none!important}
+body.inside #exitInterior{display:block!important;position:fixed;top:auto!important;bottom:calc(84px + env(safe-area-inset-bottom))!important;right:12px!important;left:auto!important;z-index:6!important;max-width:48vw;padding:12px 9px;font-size:12px}
+body.inside #homeInteract{display:block!important;position:fixed;top:auto!important;bottom:calc(145px + env(safe-area-inset-bottom))!important;right:12px!important;left:auto!important;z-index:6!important;max-width:48vw;padding:12px 9px;font-size:12px}
+body.inside #tip{display:none!important}
+body.inside #message{top:calc(103px + env(safe-area-inset-top));max-width:82vw;white-space:normal;text-align:center}
+body.inside #controls{z-index:3}
+@media(max-height:570px){body.inside #homeInteract{bottom:calc(100px + env(safe-area-inset-bottom))!important}body.inside #exitInterior{bottom:calc(38px + env(safe-area-inset-bottom))!important}}
+
+/* ROMA 8.5: single, non-overlapping interior control dock */
+body.inside #actions{display:none!important}
+body.inside #homeInteract,body.inside #exitInterior{display:block!important;position:fixed!important;top:auto!important;left:auto!important;right:12px!important;width:min(44vw,175px)!important;max-width:none!important;box-sizing:border-box!important;z-index:7!important;font-size:12px!important;line-height:1.25!important;padding:12px 7px!important}
+body.inside #homeInteract{bottom:calc(148px + env(safe-area-inset-bottom))!important}
+body.inside #exitInterior{bottom:calc(88px + env(safe-area-inset-bottom))!important}
+body.inside #tip{display:none!important}
+#lifePanel{z-index:30!important}#lifeCard{max-height:75dvh!important;overflow-y:auto!important}#lifeChoices button{min-height:48px!important}
+@media(max-height:570px){body.inside #homeInteract{bottom:calc(110px + env(safe-area-inset-bottom))!important}body.inside #exitInterior{bottom:calc(50px + env(safe-area-inset-bottom))!important}}
+</style></head><body><canvas id="game"></canvas><div id="hud"><div id="status">🇮🇹 VITA ITALIANA · ROMA 8.5 · LOCALI INTERATTIVI<br><span id="fps">Avvio 3D...</span></div><div>🏛️ Roma · guida libera</div></div><div id="lifeHud">💶 <span id="money">100</span> € · ⚡ <span id="energy">100</span>% · 🍝 <span id="hunger">0</span>%<br>🏠 <span id="homeStatus">Nessuna casa</span> · 🕒 <span id="gameTime">08:00</span></div><div id="message">Esplora la città e avvicinati a un'auto!</div><button id="homeInteract">📋 ATTIVITÀ DEL LOCALE</button><button id="exitInterior">🚪 ESCI DAL LOCALE</button><div id="actions"><button id="lifeAction">✨ INTERAGISCI</button><button id="enter">🚗 ENTRA</button><button id="run">🏃 CORRI</button><button id="reset">🎥 CENTRA</button><button id="quality">⚙️ GRAFICA</button></div><div id="tip">A piedi: joystick + visuale con dito · Nei locali: premi ATTIVITÀ per scegliere cosa fare</div><div id="lookZone" aria-label="Trascina per spostare la visuale"></div><div id="controls"><div class="group">MOVIMENTO<div class="stick" id="move"><div class="knob"></div></div></div></div><div id="driveControls"><div id="steerPad" aria-label="Volante virtuale">◉</div><div id="pedals"><button id="brake">🛑<br>FRENA<br>↩</button><button id="gas">⬆️<br>ACCELERA</button></div></div><div id="lifePanel"><div id="lifeCard"><button id="closeLife">✕</button><h2 id="lifeTitle">Vita quotidiana</h2><p id="lifeDesc"></p><div id="lifeChoices"></div><p id="lifeNote">I progressi vengono salvati automaticamente su questo dispositivo.</p></div></div><div id="error"></div><script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
+const $=id=>document.getElementById(id), canvas=$('game');let renderer;try{renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});}catch(e){$('error').style.display='block';$('error').textContent='WebGL non disponibile: '+e.message;throw e;}
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;
+const scene=new THREE.Scene();scene.background=new THREE.Color('#a6d2ef');scene.fog=new THREE.Fog('#a6d2ef',65,145);const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,.1,220);
+scene.add(new THREE.HemisphereLight(0xffffff,0x8b8279,2.1));const sun=new THREE.DirectionalLight(0xffedce,2.2);sun.position.set(-30,60,25);scene.add(sun);const skyDay=new THREE.Color('#a6d2ef'),skyNight=new THREE.Color('#182942');
+const mat=c=>new THREE.MeshLambertMaterial({color:c});const ground=mat('#87a66e'),road=mat('#565b5d'),pavement=mat('#c8bdae'),white=mat('#eae6d9'),yellow=mat('#e7ce85'),roof=mat('#aa5e4a'),glass=mat('#759caf'),trunk=mat('#826249'),leaf=mat('#58895a');const walls=['#d5b091','#d9c3aa','#d7a48d','#e5d1b6','#c3b8a6','#d2b99e'].map(mat);
+function box(w,h,d,m,x,y,z,parent=scene){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);parent.add(o);return o;}
+box(170,.12,170,ground,0,-.13,0);const roads=[-48,-24,0,24,48];for(const a of roads){box(8,.03,150,road,a,.015,0);box(150,.03,8,road,0,.016,a);for(const s of [-1,1]){box(2,.13,150,pavement,a+s*5,.08,0);box(150,.13,2,pavement,0,.08,a+s*5);}for(let t=-68;t<=68;t+=8){box(.12,.025,3,yellow,a,.044,t);box(3,.025,.12,yellow,t,.045,a);}}
+// ROMA 8: road edge markings, drain covers, street furniture.
+const curbPaint=mat('#f3ede2'),drainMat=mat('#454b4c');
+for(const a of roads){for(let t=-66;t<=66;t+=11){
+  if(!roads.some(r=>Math.abs(r-t)<7)){
+    box(.13,.032,5.3,curbPaint,a-3.55,.05,t);box(.13,.032,5.3,curbPaint,a+3.55,.05,t);
+    box(5.3,.032,.13,curbPaint,t,.05,a-3.55);box(5.3,.032,.13,curbPaint,t,.05,a+3.55);
+  }
+}}
+// Crosswalks at intersections.
+for(const x of roads)for(const z of roads){for(let k=-3;k<=3;k++){box(.55,.028,2.5,white,x+k*.98,.052,z+7);box(2.5,.028,.55,white,x+7,.052,z+k*.98);}}
+const solids=[];function building(x,z,w,d,h,idx){box(w,h,d,walls[idx%walls.length],x,h/2,z);box(w+.65,.55,d+.65,roof,x,h+.2,z);solids.push({x,z,w:w/2+.7,d:d/2+.7});const floors=Math.floor((h-1.5)/3);for(let f=0;f<floors;f++){const yy=2.7+f*3;for(let k=-w/2+2;k<w/2-1;k+=3){box(1.3,1.6,.09,glass,x+k,yy,z+d/2+.07);box(1.3,1.6,.09,glass,x+k,yy,z-d/2-.07);}for(let k=-d/2+2;k<d/2-1;k+=3){box(.09,1.6,1.3,glass,x+w/2+.07,yy,z+k);box(.09,1.6,1.3,glass,x-w/2-.07,yy,z+k);}}box(2.1,2.8,.12,mat('#775947'),x,1.4,z+d/2+.08);}
+// Architectural details for more varied, less schematic Roman façades.
+for(let ix=0;ix<4;ix++)for(let iz=0;iz<4;iz++){const x=-36+ix*24,z=-36+iz*24;if(ix===2&&iz===2)continue;const h=9+((ix*7+iz*3)%5)*2.5;building(x,z,11.5,12,h,ix+iz);}
+// Traffic signals cycle between red, amber and green; decorative in this release.
+const signals=[];const signalPole=mat('#424c4a');
+for(const x of roads)for(const z of roads){
+  const g=new THREE.Group();g.position.set(x+5.1,0,z+5.1);scene.add(g);
+  box(.16,4.2,.16,signalPole,0,2.1,0,g);box(.64,1.65,.48,mat('#222a2a'),0,4.45,0,g);
+  const bulbs=[];for(const [i,c] of ['#f04a43','#f5bd41','#4ac76c'].entries()){
+    const b=new THREE.Mesh(new THREE.SphereGeometry(.18,10,8),new THREE.MeshBasicMaterial({color:c}));
+    b.position.set(0,5.02-i*.5,.27);g.add(b);bulbs.push(b);
+  }signals.push({bulbs,phase:(x+z+192)/24});
+}
+// Small Roman-inspired piazza: monument, columns, fountain.
+const px=12,pz=12;box(16,.13,16,mat('#d8cab2'),px,.04,pz);const marble=mat('#e8ddc8');box(6,.8,6,marble,px,.48,pz);box(3,4,3,marble,px,2.85,pz);box(4,.45,4,marble,px,5.1,pz);const statue=new THREE.Mesh(new THREE.CylinderGeometry(.25,.5,2.4,8),marble);statue.position.set(px,6.5,pz);scene.add(statue);for(const sx of [-1,1])for(const sz of [-1,1]){const x=px+sx*6,z=pz+sz*6;const base=box(1.3,.35,1.3,marble,x,.2,z);const col=new THREE.Mesh(new THREE.CylinderGeometry(.35,.4,3.5,10),marble);col.position.set(x,2.1,z);scene.add(col);box(1.2,.35,1.2,marble,x,4,z);}
+// Decorative trees and streetlights.
+function nearRoad(v){return roads.some(a=>Math.abs(v-a)<6.7);}
+function treeAllowed(x,z){if(Math.abs(x)>65||Math.abs(z)>65)return false;if(nearRoad(x)||nearRoad(z))return false;return !solids.some(b=>Math.abs(x-b.x)<b.w+2.6&&Math.abs(z-b.z)<b.d+2.6);}
+for(let z=-65;z<=65;z+=7.5)for(const x of [-63,-39,-15,9,33,57,63]){if(!treeAllowed(x,z))continue;box(.28,2.7,.28,trunk,x,1.35,z);const crown=new THREE.Mesh(new THREE.SphereGeometry(1.3,9,7),leaf);crown.position.set(x,3.3,z);scene.add(crown);}
+const metal=mat('#4d5054'),lamp=mat('#fff5c4');for(let z=-54;z<=54;z+=24)for(const x of [-18,30]){box(.16,5,.16,metal,x,2.5,z);box(1.2,.2,.6,lamp,x+.55,5.05,z);}
+function human(shirt='#3076b0'){const root=new THREE.Group();box(.72,1.05,.43,mat(shirt),0,1.3,0,root);const head=new THREE.Mesh(new THREE.SphereGeometry(.31,10,8),mat('#dcae8c'));head.position.set(0,2.1,0);root.add(head);const limbs=[];for(const s of [-1,1]){const leg=new THREE.Group();leg.position.set(s*.21,.82,0);box(.28,.82,.3,mat('#394356'),0,-.41,0,leg);root.add(leg);limbs.push(leg);const arm=new THREE.Group();arm.position.set(s*.49,1.72,0);box(.21,.78,.22,mat('#dcae8c'),0,-.39,0,arm);root.add(arm);limbs.push(arm);}root.userData.limbs=limbs;return root;}
+const player=human();scene.add(player);player.position.set(-24,0,-24);let yaw=0,pitch=.23,run=false,playerSpeed=0,driving=null,steering=0,cameraHeading=0,lookOffset=0;
+const people=[];for(let i=0;i<18;i++){const p=human(['#ad5950','#518a69','#b48c50','#8273a9'][i%4]);scene.add(p);const axis=i%2?'x':'z',lane=roads[i%5]+(i%3?5.5:-5.5);people.push({mesh:p,axis,lane,t:-55+(i*17)%110,dir:i%3?-1:1,phase:i*.8});}
+function car(color){const g=new THREE.Group();box(2.05,.65,4,mat(color),0,.72,0,g);box(1.6,.7,2.1,glass,0,1.34,-.22,g);for(const x of [-1.04,1.04])for(const z of [-1.3,1.3]){const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.38,.38,.2,10),mat('#292b30'));wheel.rotation.z=Math.PI/2;wheel.position.set(x,.38,z);g.add(wheel);}box(1.5,.18,.12,lamp,0,.72,-2.02,g);return g;}
+const cars=[];for(let i=0;i<9;i++){const mesh=car(['#c94c42','#e4d5b6','#3c80b0','#e2b84e','#6e8970'][i%5]);scene.add(mesh);const axis=i%2?'x':'z',lane=roads[i%5]+(i%2?1.8:-1.8);cars.push({mesh,axis,lane,t:-57+i*13,dir:i%3?-1:1,drivable:i<5});}
+// Parked, accessible cars near the spawn intersection.
+for(let i=0;i<3;i++){const mesh=car(['#c74943','#3f86bc','#e2d6bf'][i]);scene.add(mesh);mesh.position.set(-21-i*5,0,-24);mesh.rotation.y=Math.PI/2;cars.push({mesh,axis:'parked',lane:0,t:0,dir:0,drivable:true});}
+// ROMA 5: small, persistent life simulation with three places to visit.
+const LIFE_KEY='vita_italiana_roma5_save_v1';
+const initialLife={money:100,energy:100,hunger:0,home:false,minutes:480,lastShift:-10000,food:3};
+let life={...initialLife};try{const saved=JSON.parse(localStorage.getItem(LIFE_KEY)||'null');if(saved&&typeof saved==='object')for(const k of Object.keys(initialLife)){if(typeof saved[k]===typeof initialLife[k]&&Number.isFinite(saved[k]===true?1:saved[k]===false?0:saved[k]))life[k]=saved[k];}}catch(e){}
+const places=[{id:'home',name:'CASA',x:-36,z:-28.5,color:'#69c7ff',icon:'🏠'},{id:'work',name:'LAVORO',x:-12,z:-28.5,color:'#f6c36a',icon:'💼'},{id:'shop',name:'ALIMENTARI',x:39.2,z:-3.5,color:'#9ee69c',icon:'🛒'}];
+// Signs are attached to the actual shopfronts, not floating colored markers.
+function signTexture(label,background,foreground){const cv=document.createElement('canvas');cv.width=768;cv.height=192;const ctx=cv.getContext('2d');ctx.fillStyle=background;ctx.fillRect(0,0,768,192);ctx.strokeStyle='#d9c4a3';ctx.lineWidth=12;ctx.strokeRect(7,7,754,178);ctx.fillStyle=foreground;ctx.font='bold 67px system-ui,Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(label,384,98,720);const tex=new THREE.CanvasTexture(cv);tex.colorSpace=THREE.SRGBColorSpace;return new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide});}
+const shopLooks={home:['AGENZIA CASA ROMA','#274a60','#fff8e6'],work:['ROMA CONSEGNE','#763f28','#fff3dd'],shop:['ALIMENTARI ROMA','#315b3a','#fff8e6']};
+for(const p of places){const [label,bg,fg]=shopLooks[p.id];const b=solids.find(b=>Math.abs(b.x-(p.id==='shop'?36:p.x))<1);if(!b)continue;const frontZ=b.z+b.d-.65;
+  // Distinctive storefront: framed glazing, doorway, awning and readable shop name.
+  box(7.8,3.7,.19,mat('#e3d6c2'),b.x,2.05,frontZ+.15);
+  box(5.2,2.65,.24,glass,b.x-.8,1.72,frontZ+.31);
+  box(1.7,2.7,.3,mat('#594d42'),b.x+3.2,1.7,frontZ+.35);
+  box(1.35,1.8,.34,glass,b.x+3.2,1.95,frontZ+.54);
+  box(.15,.14,.15,mat('#e4c685'),b.x+3.75,1.5,frontZ+.77);
+  const sign=new THREE.Mesh(new THREE.PlaneGeometry(8,2),signTexture(label,bg,fg));sign.position.set(b.x,4.55,frontZ+.52);scene.add(sign);
+  const awning=box(8.7,.2,1.35,mat(bg),b.x,3.63,frontZ+.95);awning.rotation.x=.09;
+  // Small door step and planters.
+  box(2.2,.14,1.3,pavement,b.x+3.2,.12,frontZ+1.1);
+  for(const sx of [-1,1]){const px=b.x+sx*4.6;box(.65,.65,.65,mat('#b78d6a'),px,.36,frontZ+1.2);const shrub=new THREE.Mesh(new THREE.SphereGeometry(.52,8,6),leaf);shrub.position.set(px,1,frontZ+1.2);scene.add(shrub);}
+  // Interaction remains in front of the building at the existing place coordinate.
+}
+// ROMA 8: visitable, furnished interiors in a separate area of the same 3D world.
+const interiorBase=260, interiorRooms={home:0,work:32,shop:64};
+let interior=null, outdoorPosition=new THREE.Vector3(),outdoorYaw=0;
+const interiors=new THREE.Group();scene.add(interiors);const exteriorObjects=[];
+const floorMat=mat('#d5bb9d'),wallMat=mat('#e9dccb'),wood=mat('#8b6045'),fabric=mat('#477f82'),dark=mat('#353a40'),warm=mat('#e9c987');
+function furnish(kind,z0){
+ const room=new THREE.Group();room.position.set(0,0,z0);interiors.add(room);
+ const b=(w,h,d,m,x,y,z)=>box(w,h,d,m,x,y,z,room);
+ b(16,.22,16,floorMat,0,-.13,0);b(16,.24,16,wallMat,0,4.15,0);
+ // Wall openings are suggested by a visible door frame; the exit is handled by the on-screen button.
+ b(16,4,.24,wallMat,0,2,-8);b(16,4,.24,wallMat,0,2,8);
+ b(.24,4,16,wallMat,-8,2,0);b(.24,4,16,wallMat,8,2,0);
+ b(3,.16,.15,wood,0,3.25,7.8);b(.15,3,.2,wood,-1.5,1.5,7.8);b(.15,3,.2,wood,1.5,1.5,7.8);
+ b(2.6,2.8,.12,mat('#536c75'),0,1.4,7.72);
+ // Bright windows, paintings and warm light.
+ for(const x of [-5,5]){b(2.4,1.8,.12,glass,x,2.4,-7.8);b(.12,1.8,.15,white,x,2.4,-7.7);b(2.4,.12,.15,white,x,2.4,-7.7);}
+ const light=new THREE.PointLight(0xffe3b6,35,20);light.position.set(0,3.5,0);room.add(light);
+ if(kind==='home'){
+   // Bedroom, living room and kitchenette with partitions.
+   b(5,.24,3.4,wood,-4.5,.35,-4.3);b(4.7,.34,3,fabric,-4.5,.62,-4.3);
+   for(const x of [-6,-3])b(1,.4,1,white,x,.94,-5.1);
+   b(3.2,.75,1.15,fabric,2.5,.5,-4);b(3.2,.65,.3,fabric,2.5,1.05,-4.65);b(3,.3,1.5,wood,3.5,.65,-.5);b(6,.035,5,mat('#c4a783'),3.5,.015,-3.5);
+   b(3,.9,.8,wood,4.5,.55,5.5);b(2,.1,.8,dark,4.5,1.1,5.5);
+   b(2.15,1.55,.12,dark,2,2.2,-7.62);
+ }else if(kind==='work'){
+   for(const x of [-5,0,5]){b(3,.18,1.5,wood,x,.85,-3);b(1.4,.85,.08,dark,x,1.6,-3.5);b(1.5,.8,1.1,fabric,x,.5,-1);}
+   b(11,2,.5,wood,0,1.1,6.6);for(const x of [-4,0,4])b(2.4,1.4,1.5,mat('#a27e53'),x,.8,5.3);
+ }else{
+   for(const x of [-5.8,5.8])for(const z of [-4,0,4]){b(2.1,2.5,1.2,wood,x,1.25,z);for(const y of [.65,1.45,2.25]){b(1.8,.14,1.2,warm,x,y,z);for(const dx of [-.55,0,.55])b(.36,.42,.45,mat(dx===0?'#a9533e':'#75a26b'),x+dx,y+.28,z);}}
+   b(5,1.2,1.3,wood,0,.6,-5.7);b(1.5,.16,.9,dark,1,1.32,-5.7);
+ }
+}
+for(const [kind,z] of Object.entries(interiorRooms))furnish(kind,interiorBase+z);
+// Keep only the active interior visible; other rooms never bleed through.
+function setInteriorVisibility(kind){for(const [k,z] of Object.entries(interiorRooms))interiors.children[Object.keys(interiorRooms).indexOf(k)].visible=(k===kind);}
+setInteriorVisibility(null);
+const exteriorRootObjects=scene.children.filter(o=>o!==interiors && o!==player && o!==sun);
+function showExterior(show){for(const o of exteriorRootObjects){if(o.isLight)continue;o.visible=show;} interiors.visible=!show;}
+
+// Home interaction hotspots correspond to furniture already present in the room.
+const homeObjects=[
+ {name:'Letto',x:-4.5,z:-4.3,r:3.6,action:'sleep'},
+ {name:'Televisione',x:5.5,z:-6.5,r:3.4,action:'tv'},
+ {name:'Cucina',x:4.5,z:5.5,r:3.5,action:'cook'},
+ {name:'Divano',x:3.8,z:-4,r:3.1,action:'sofa'}
+];
+let nearHomeObject=null, tvOn=false;
+const homeRoom=interiors.children[0];const tvScreen=box(1.85,1.22,.055,new THREE.MeshBasicMaterial({color:'#19232d',side:THREE.DoubleSide}),2,2.2,-7.53,homeRoom);const tvGlow=new THREE.PointLight(0x6acaff,0,5);tvGlow.position.set(2,2.2,-6.8);homeRoom.add(tvGlow);let sitting=false;
+function updateHomeButton(){
+ $('homeInteract').style.display=interior&&!lifeOpen?'block':'none';
+}
+function homeActivity(action){
+ if(action==='sleep'){life.energy=100;life.hunger=Math.min(100,life.hunger+15);life.minutes+=480;player.position.set(-4.5,0,interiorBase-2);notice('😴 Hai dormito: energia recuperata!');}
+ if(action==='tv'){tvOn=!tvOn;tvScreen.material.color.set(tvOn?'#58d5ff':'#19232d');tvGlow.intensity=tvOn?3:0;player.position.set(2.5,0,interiorBase-2.4);notice(tvOn?'📺 TV accesa':'📺 TV spenta');}
+ if(action==='cook'){if(life.food<1){notice('🛒 Frigorifero vuoto: compra la spesa agli Alimentari');return;}life.food--;life.hunger=Math.max(0,life.hunger-35);life.minutes+=20;player.position.set(3,0,interiorBase+3.8);notice('🍝 Hai cucinato con le scorte del frigorifero!');}
+ if(action==='sofa'){sitting=!sitting;if(sitting){player.position.set(2.5,0,interiorBase-3.9);player.rotation.y=0;player.scale.y=.72;life.energy=Math.min(100,life.energy+12);life.minutes+=20;notice('🛋️ Ti sei seduto sul divano');}else{player.scale.y=1;player.position.set(2.5,0,interiorBase-2.4);notice('🚶 Ti sei alzato dal divano');}}
+ updateLifeHud();saveLife();
+}
+function showInteriorMenu(){
+ if(!interior)return;
+ lifeOpen=true;document.body.classList.add('life-open');$('lifePanel').style.display='flex';
+ $('lifeChoices').replaceChildren();
+ const descriptions={home:'Scegli un’attività. In cucina usi le scorte acquistate al supermercato.',work:'Scegli cosa fare nell’ufficio consegne.',shop:'Compra la spesa per riempire il frigorifero oppure mangia qualcosa.'};
+ $('lifeTitle').textContent=interior==='home'?'🏠 La tua casa':interior==='work'?'💼 Ufficio':'🛒 Alimentari';
+ $('lifeDesc').textContent=descriptions[interior];
+ if(interior==='home'){
+  for(const [label,action] of [['🛌 Dormi e recupera energia','sleep'],[tvOn?'📺 Spegni la TV':'📺 Accendi la TV','tv'],['🍝 Cucina e mangia · scorte: '+life.food,'cook'],[sitting?'🛋️ Alzati dal divano':'🛋️ Siediti e riposati','sofa']]){
+   addChoice(label,()=>{homeActivity(action);closeLife();});
+  }
+ }else if(interior==='work'){
+  addChoice('📦 Completa un turno di consegne · +60 €',()=>{if(life.minutes-life.lastShift<30){notice('⏳ Devi aspettare prima del prossimo turno');return;}if(life.energy<25){notice('⚡ Energia insufficiente: torna a riposare');return;}life.money+=60;life.energy-=25;life.hunger=Math.min(100,life.hunger+18);life.minutes+=30;life.lastShift=life.minutes;notice('💶 Turno completato: +60 €!');closeLife();});
+  addChoice('📋 Consulta gli incarichi',()=>{notice('📦 Incarico disponibile: turno di consegne da 60 €');closeLife();});
+ }else if(interior==='shop'){
+  addChoice('🛒 Fai la spesa · 20 € (5 pasti)',()=>{if(life.money<20){notice('💶 Non hai abbastanza soldi');return;}life.money-=20;life.food+=5;notice('🛒 Acquistati 5 pasti per il frigorifero!');closeLife();});
+  addChoice('🍕 Mangia una pizza · 12 €',()=>{if(life.money<12){notice('💶 Soldi insufficienti');return;}life.money-=12;life.hunger=Math.max(0,life.hunger-45);notice('🍕 Hai mangiato una pizza!');closeLife();});
+  addChoice('🥪 Mangia un panino · 7 €',()=>{if(life.money<7){notice('💶 Soldi insufficienti');return;}life.money-=7;life.hunger=Math.max(0,life.hunger-25);notice('🥪 Hai mangiato un panino!');closeLife();});
+ }
+ addChoice('🚶 Continua a esplorare',()=>closeLife());
+}
+$('homeInteract').onclick=showInteriorMenu;
+
+function enterInterior(place){
+ if(driving)return;outdoorPosition.copy(player.position);outdoorYaw=yaw;interior=place.id;
+ player.position.set(0,0,interiorBase+interiorRooms[place.id]+3);yaw=Math.PI;pitch=.18;setInteriorVisibility(place.id);showExterior(false);sitting=false;player.scale.y=1;
+ closeLife();document.body.classList.add('inside');$('message').textContent='🏠 Sei dentro '+place.name+' · esplora con il joystick';
+ camera.position.set(0,2.8,player.position.z+2);scene.fog=null;scene.background.set('#b6aa99');requestAnimationFrame(()=>showInteriorMenu());
+}
+function exitInterior(){if(!interior)return;showExterior(true);setInteriorVisibility(null);sitting=false;player.scale.y=1;player.position.copy(outdoorPosition);yaw=outdoorYaw;interior=null;document.body.classList.remove('inside');scene.fog=new THREE.Fog('#a6d2ef',65,145);scene.background.copy(skyDay);camera.position.set(player.position.x,4,player.position.z+7);$('message').textContent='🚶 Sei tornato in strada';}
+$('exitInterior').onclick=exitInterior;
+let nearbyPlace=null,lifeOpen=false,lifeTick=0,toastUntil=0;
+function saveLife(){try{localStorage.setItem(LIFE_KEY,JSON.stringify(life));}catch(e){}}
+function updateLifeHud(){$('money').textContent=Math.floor(life.money);$('energy').textContent=Math.floor(life.energy);$('hunger').textContent=Math.floor(life.hunger);$('homeStatus').textContent=(life.home?'Casa in affitto':'Nessuna casa')+' · 🛒 '+life.food+' pasti';const mm=Math.floor(life.minutes)%1440;$('gameTime').textContent=String(Math.floor(mm/60)).padStart(2,'0')+':'+String(mm%60).padStart(2,'0');}
+function notice(msg){$('message').textContent=msg;toastUntil=elapsed+4;}
+function closeLife(){lifeOpen=false;$('lifePanel').style.display='none';document.body.classList.remove('life-open');}
+$('closeLife').onclick=closeLife;
+function addChoice(label,fn){const b=document.createElement('button');b.textContent=label;b.onclick=()=>{fn();updateLifeHud();saveLife();if(lifeOpen&&!interior&&nearbyPlace)showPlace(nearbyPlace);};$('lifeChoices').appendChild(b);}
+function showPlace(place){lifeOpen=true;document.body.classList.add('life-open');$('lifePanel').style.display='flex';$('lifeTitle').textContent=place.icon+' '+place.name;$('lifeChoices').replaceChildren();addChoice('🚪 ENTRA E VISITA IL LOCALE',()=>enterInterior(place));
+if(place.id==='home'){$('lifeDesc').textContent=life.home?'Questa è casa tua! Riposati per recuperare energia.':'Puoi affittare questa casa per 35 €. Poi potrai dormirci quando vuoi.';
+if(!life.home)addChoice('🔑 Affitta casa · 35 €',()=>{if(life.money<35)return notice('Non hai abbastanza soldi!');life.money-=35;life.home=true;notice('🏠 Hai affittato la tua prima casa!');});
+else addChoice('🛌 Dormi e recupera energia',()=>{life.energy=100;life.hunger=Math.min(100,life.hunger+15);life.minutes+=480;notice('😴 Ti sei riposato! Energia al 100%.');});}
+if(place.id==='work'){$('lifeDesc').textContent='Lavora come addetto alle consegne. Ogni turno ti fa guadagnare 60 €, ma consuma 25 punti di energia. Puoi fare un turno ogni 30 minuti di gioco.';
+addChoice('💼 Fai un turno · +60 €',()=>{if(life.minutes-life.lastShift<30)return notice('⏳ Aspetta prima del prossimo turno!');if(life.energy<25)return notice('⚡ Sei stanco: riposati a casa!');life.money+=60;life.energy-=25;life.hunger=Math.min(100,life.hunger+18);life.minutes+=30;life.lastShift=life.minutes;notice('💶 Turno completato! Hai guadagnato 60 €.');});}
+if(place.id==='shop'){$('lifeDesc').textContent='Fai la spesa e mangia per ridurre la fame. I pasti costano soldi ma ti aiutano a lavorare.';
+addChoice('🍕 Compra pizza · 12 €',()=>{if(life.money<12)return notice('💶 Soldi insufficienti!');life.money-=12;life.hunger=Math.max(0,life.hunger-45);notice('🍕 Hai mangiato una pizza!');});
+addChoice('🥪 Compra panino · 7 €',()=>{if(life.money<7)return notice('💶 Soldi insufficienti!');life.money-=7;life.hunger=Math.max(0,life.hunger-25);notice('🥪 Hai mangiato un panino!');});}
+}
+$('lifeAction').onclick=()=>{if(nearbyPlace&&!driving)showPlace(nearbyPlace);};
+updateLifeHud();
+const driveInput={gas:false,brake:false,steer:0};
+function pedal(id,key){const el=$(id);let pointer=null;el.addEventListener('pointerdown',e=>{if(pointer!==null)return;pointer=e.pointerId;el.setPointerCapture(pointer);driveInput[key]=true;el.classList.add('pressed');e.preventDefault();});const release=e=>{if(pointer!==e.pointerId)return;pointer=null;driveInput[key]=false;el.classList.remove('pressed');};for(const name of ['pointerup','pointercancel','lostpointercapture'])el.addEventListener(name,release);}
+pedal('gas','gas');pedal('brake','brake');
+{const el=$('steerPad');let pointer=null;function update(e){const r=el.getBoundingClientRect();driveInput.steer=THREE.MathUtils.clamp((e.clientX-(r.left+r.width/2))/(r.width*.36),-1,1);el.style.transform=`rotate(${driveInput.steer*14}deg)`;}el.addEventListener('pointerdown',e=>{if(pointer!==null)return;pointer=e.pointerId;el.setPointerCapture(pointer);update(e);e.preventDefault();});el.addEventListener('pointermove',e=>{if(e.pointerId===pointer){update(e);e.preventDefault();}});const release=e=>{if(e.pointerId!==pointer)return;pointer=null;driveInput.steer=0;el.style.transform='rotate(0deg)';};for(const name of ['pointerup','pointercancel','lostpointercapture'])el.addEventListener(name,release);}
+const sticks={move:{x:0,y:0},look:{x:0,y:0}};function bindStick(id){const el=$(id),knob=el.querySelector('.knob'),v=sticks[id];let active=null;function update(e){const r=el.getBoundingClientRect(),radius=r.width*.28;let x=(e.clientX-r.left-r.width/2)/radius,y=(e.clientY-r.top-r.height/2)/radius;const len=Math.hypot(x,y);if(len>1){x/=len;y/=len;}v.x=x;v.y=y;knob.style.transform=`translate(${x*radius}px,${y*radius}px)`;}el.addEventListener('pointerdown',e=>{if(active!==null)return;active=e.pointerId;el.setPointerCapture(active);update(e);e.preventDefault();});el.addEventListener('pointermove',e=>{if(e.pointerId===active){update(e);e.preventDefault();}});const end=e=>{if(e.pointerId!==active)return;active=null;v.x=v.y=0;knob.style.transform='translate(0,0)';};for(const ev of ['pointerup','pointercancel','lostpointercapture'])el.addEventListener(ev,end);}bindStick('move');
+{const zone=$('lookZone');let finger=null,lastX=0,lastY=0;zone.addEventListener('pointerdown',e=>{if(finger!==null||driving||lifeOpen)return;finger=e.pointerId;lastX=e.clientX;lastY=e.clientY;zone.setPointerCapture(finger);e.preventDefault();});zone.addEventListener('pointermove',e=>{if(e.pointerId!==finger)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;yaw-=dx*.006;pitch=THREE.MathUtils.clamp(pitch+dy*.004,-.25,.7);e.preventDefault();});const done=e=>{if(e.pointerId===finger)finger=null;};for(const event of ['pointerup','pointercancel','lostpointercapture'])zone.addEventListener(event,done);}
+
+$('run').onclick=()=>{run=!run;$('run').textContent=run?'🚶 CAMMINA':'🏃 CORRI';};$('reset').onclick=()=>{if(driving){lookOffset=0;cameraHeading=driving.mesh.rotation.y;}else{yaw=0;}pitch=.23;};let low=false;$('quality').onclick=()=>{low=!low;renderer.setPixelRatio(low?1:Math.min(devicePixelRatio||1,1.5));$('quality').textContent=low?'⚙️ LEGGERA':'⚙️ GRAFICA';};
+function blocked(x,z){if(interior){const zz=z-(interiorBase+interiorRooms[interior]);if(Math.abs(x)>7.15||Math.abs(zz)>7.15)return true;const furniture=interior==='home'?[[-4.5,-4.3,2.8,2.1],[2.5,-4,1.85,.85],[3.5,-.5,1.8,1.1],[4.5,5.5,2.0,1.0]]:interior==='work'?[[-5,-3,1.65,.95],[0,-3,1.65,.95],[5,-3,1.65,.95],[-5,-1,.9,.7],[0,-1,.9,.7],[5,-1,.9,.7],[0,6.6,5.7,.65],[-4,5.3,1.4,.9],[0,5.3,1.4,.9],[4,5.3,1.4,.9]]:[[-5.8,-4,1.2,.85],[-5.8,0,1.2,.85],[-5.8,4,1.2,.85],[5.8,-4,1.2,.85],[5.8,0,1.2,.85],[5.8,4,1.2,.85],[0,-5.7,2.8,.95]];return furniture.some(([fx,fz,hw,hd])=>Math.abs(x-fx)<hw+.58&&Math.abs(zz-fz)<hd+.58);} if(Math.abs(x)>69||Math.abs(z)>69)return true;return solids.some(b=>Math.abs(x-b.x)<b.w+.25&&Math.abs(z-b.z)<b.d+.25);}
+let nearest=null;function findCar(){let best=4.4,out=null;for(const c of cars){if(!c.drivable)continue;const d=player.position.distanceTo(c.mesh.position);if(d<best){best=d;out=c;}}return out;}
+$('enter').onclick=()=>{if(driving){const c=driving;const right=new THREE.Vector3(Math.cos(c.mesh.rotation.y),0,-Math.sin(c.mesh.rotation.y));let exit=c.mesh.position.clone().addScaledVector(right,3.2);if(blocked(exit.x,exit.z))exit=c.mesh.position.clone().addScaledVector(right,-3.2);player.position.copy(exit);player.position.y=0;player.visible=true;driving=null;document.body.classList.remove('in-car');driveInput.gas=driveInput.brake=false;driveInput.steer=0;carSpeed=0;steering=0;yaw=cameraHeading; $('enter').textContent='🚗 ENTRA';$('message').textContent='Sei sceso dall’auto';}else if(nearest){driving=nearest;document.body.classList.add('in-car');player.visible=false;carSpeed=0;steering=0;lookOffset=0;cameraHeading=driving.mesh.rotation.y;pitch=.18;$('enter').textContent='🚶 ESCI';$('message').textContent='Volante a sinistra · ACCELERA e FRENA a destra';}};
+const clock=new THREE.Clock(),target=new THREE.Vector3(),desired=new THREE.Vector3();let elapsed=0,frames=0,fpsTime=0,carSpeed=0;
+function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.045);elapsed+=dt;const m=sticks.move,l={x:0,y:0};
+lifeTick+=dt;if(lifeTick>1){life.minutes+=Math.floor(lifeTick*2);lifeTick=0;life.hunger=Math.min(100,life.hunger+.09);if(life.hunger>85)life.energy=Math.max(0,life.energy-.12);updateLifeHud();saveLife();}
+// Gradual day/night cycle and synchronized signal lamps.
+const hour=(life.minutes%1440)/60;
+const daylight=THREE.MathUtils.smoothstep(Math.sin((hour-6)/24*Math.PI*2),-.32,.28);
+if(!interior)scene.background.copy(skyNight).lerp(skyDay,daylight);
+sun.intensity=.25+daylight*1.95;
+for(const signal of signals){const phase=(Math.floor(life.minutes/0.35)+signal.phase)%24;const active=phase<11?0:phase<14?1:2;
+ signal.bulbs.forEach((b,i)=>b.material.color.setHex(i===active?[0xf04a43,0xf5bd41,0x4ac76c][i]:0x343b38));}
+updateHomeButton();
+nearbyPlace=!driving&&!interior?places.find(p=>Math.hypot(player.position.x-p.x,player.position.z-p.z)<(p.id==='shop'?11:7)):null;
+$('lifeAction').style.display=nearbyPlace&&!lifeOpen?'block':'none';if(nearbyPlace&&!lifeOpen&&elapsed>toastUntil)$('message').textContent=nearbyPlace.icon+' '+nearbyPlace.name+' · premi INTERAGISCI';
+if(lifeOpen){renderer.render(scene,camera);return;}
+
+if(driving){
+  const c=driving.mesh;
+  // Accelerazione e frenata progressive: joystick avanti = avanti.
+  const throttle=driveInput.gas?1:driveInput.brake?-0.48:0;
+  const maxSpeed=12;
+  carSpeed=THREE.MathUtils.damp(carSpeed,throttle*maxSpeed,throttle===0?3.3:1.9,dt);
+  if(Math.abs(carSpeed)<.025)carSpeed=0;
+  // Sterzo filtrato, meno sensibile alle alte velocita e senza rotazioni da fermo.
+  const steerInput=Math.abs(driveInput.steer)<.08?0:driveInput.steer;
+  steering=THREE.MathUtils.damp(steering,steerInput,7.5,dt);
+  const speedFactor=Math.min(Math.abs(carSpeed)/3,1);
+  const steerRate=1.45/(1+Math.abs(carSpeed)*.065);
+  if(speedFactor>.01)c.rotation.y-=steering*steerRate*speedFactor*dt*Math.sign(carSpeed);
+  const nx=c.position.x-Math.sin(c.rotation.y)*carSpeed*dt;
+  const nz=c.position.z-Math.cos(c.rotation.y)*carSpeed*dt;
+  if(!blocked(nx,nz)){c.position.x=nx;c.position.z=nz;}else carSpeed=0;
+  // La visuale segue la direzione dell'auto, senza rimanere bloccata sull'angolo iniziale.
+  lookOffset=0;
+  
+  pitch=THREE.MathUtils.damp(pitch,.18,2.8,dt);
+  const followAngle=c.rotation.y;
+  cameraHeading+=Math.atan2(Math.sin(followAngle-cameraHeading),Math.cos(followAngle-cameraHeading))*(1-Math.exp(-5.5*dt));
+  target.set(c.position.x,1.3,c.position.z);
+  const dist=9.4,flat=Math.cos(pitch)*dist;
+  desired.set(target.x+Math.sin(cameraHeading)*flat,target.y+3+Math.sin(pitch)*dist,target.z+Math.cos(cameraHeading)*flat);
+  $('enter').style.display='block';
+}
+else{yaw-=l.x*1.8*dt;pitch=THREE.MathUtils.clamp(pitch+l.y*1.2*dt,-.25,.7);const forward=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw)),right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));const velocity=forward.multiplyScalar(-m.y).addScaledVector(right,m.x),mag=sitting?0:Math.min(1,velocity.length());playerSpeed=THREE.MathUtils.damp(playerSpeed,(run?7:4.2)*mag,10,dt);if(mag>.08&&!sitting){velocity.normalize();const nx=player.position.x+velocity.x*playerSpeed*dt,nz=player.position.z+velocity.z*playerSpeed*dt;if(!blocked(nx,player.position.z))player.position.x=nx;if(!blocked(player.position.x,nz))player.position.z=nz;player.rotation.y=Math.atan2(-velocity.x,-velocity.z);}const step=elapsed*(run?12:8);for(let i=0;i<4;i++)player.userData.limbs[i].rotation.x=Math.sin(step+(i===0||i===3?0:Math.PI))*Math.min(.55,playerSpeed*.12);target.set(player.position.x,1.55,player.position.z);const dist=interior?2.8:6.8,flat=Math.cos(pitch)*dist;desired.set(target.x+Math.sin(yaw)*flat,target.y+2+Math.sin(pitch)*dist,target.z+Math.cos(yaw)*flat);nearest=interior?null:findCar();$('enter').style.display=nearest?'block':'none';if(nearest&&elapsed>toastUntil&&!nearbyPlace)$('message').textContent='🚗 Auto vicina: premi ENTRA per guidare';}
+for(const p of people){p.t+=p.dir*dt*1.1;if(p.t>63)p.t=-63;if(p.t< -63)p.t=63;p.mesh.position.set(p.axis==='x'?p.t:p.lane,0,p.axis==='z'?p.t:p.lane);p.mesh.rotation.y=p.axis==='x'?(p.dir>0?-Math.PI/2:Math.PI/2):(p.dir>0?Math.PI:0);for(let i=0;i<4;i++)p.mesh.userData.limbs[i].rotation.x=Math.sin(elapsed*8+p.phase+(i===0||i===3?0:Math.PI))*.35;}
+for(const c of cars){if(c.axis==='parked'||c===driving)continue;c.t+=c.dir*dt*5.5;if(c.t>63)c.t=-63;if(c.t< -63)c.t=63;c.mesh.position.set(c.axis==='x'?c.t:c.lane,0,c.axis==='z'?c.t:c.lane);c.mesh.rotation.y=c.axis==='x'?(c.dir>0?-Math.PI/2:Math.PI/2):(c.dir>0?Math.PI:0);}
+if(interior){desired.x=THREE.MathUtils.clamp(desired.x,-6.8,6.8);desired.z=THREE.MathUtils.clamp(desired.z,interiorBase+interiorRooms[interior]-6.8,interiorBase+interiorRooms[interior]+6.8);desired.y=Math.min(desired.y,3.55);}camera.position.lerp(desired,1-Math.exp(-10*dt));camera.lookAt(target);renderer.render(scene,camera);frames++;fpsTime+=dt;if(fpsTime>.8){$('fps').textContent=`${Math.round(frames/fpsTime)} FPS · ${driving?'🚗 Guida':'🚶 A piedi'}`;frames=0;fpsTime=0;}}
+window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});animate();
+</script></body></html>
